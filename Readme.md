@@ -27,8 +27,8 @@ Features
 *	Enumerate - Identify live hosts inside your network (coming soon)
 
 #### Symantecs
-* Target Host - Outbound connections
-* Trusted Host - Incoming connections
+* Target Host - Outbound communication
+* Trusted Host - Bidirectional communication
 * No Strike - Devices your computer should not communicate with
 
 #### Getting Started
