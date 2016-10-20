@@ -1,4 +1,4 @@
-<img src="http://www.iconsdb.com/icons/preview/caribbean-blue/firewall-xxl.png"> 
+<img src="http://www.iconsdb.com/icons/preview/caribbean-blue/firewall-xxl.png" style="height:100px;width:100px;"> 
 
 BLUEWALL
 ======
