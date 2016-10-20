@@ -21,7 +21,24 @@ Features
 *bw - bw -c config/example.ini
 **	See example configuration
 
+#### Utils
+*	Enumerate - Identify live hosts inside your network (coming soon)
+
 #### Symantecs
 * Target Host - Outbound connections
 * Trusted Host - Incoming connections
 * No Strike - Devices your computer should not communicate with
+
+#### Getting Started
+```python
+sudo python setup.py install
+sudo bw -h (for help)
+```
+
+### Common Usage
+```python
+sudo python -c config/hostconfig.ini
+
+sudo python -ih 192.168.0.3,192.168.1.0/24
+sudo python -eh 192.168.1.1
+```
