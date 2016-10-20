@@ -39,9 +39,16 @@ sudo bw -h (for help)
 
 ### Common Usage
 ```python
+# Setup Initial Environment using Configuration
 sudo python -c config/hostconfig.ini
 
+# Export optional windows configuration
+sudo python -c config/hostconfig.ini -w autoconfig.ps1
+
+# Add additional inbound host or ranges
 sudo python -ih 192.168.0.3,192.168.1.0/24
+
+# Exclude host to communicate with
 sudo python -eh 192.168.1.1
 ```
 
