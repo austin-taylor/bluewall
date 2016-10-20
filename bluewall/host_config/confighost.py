@@ -85,7 +85,8 @@ class ConfigHost(object):
         self.set_firewall.flush_rules()
         self.set_firewall.set_defaults()
         self.autotrust()
-        self.set_firewall.set_nostrike(self.nostrike)
+        if self.nostrike:
+            self.set_firewall.set_nostrike(self.nostrike)
 
         if execute:
             self.set_firewall.process_commands()
