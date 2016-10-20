@@ -1,3 +1,5 @@
+<img src="http://www.iconsdb.com/icons/preview/caribbean-blue/firewall-xxl.png"> 
+
 BLUEWALL
 ======
 
@@ -42,3 +44,4 @@ sudo python -c config/hostconfig.ini
 sudo python -ih 192.168.0.3,192.168.1.0/24
 sudo python -eh 192.168.1.1
 ```
+
