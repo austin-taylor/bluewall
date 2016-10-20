@@ -9,6 +9,6 @@ setup(
     packages=find_packages(),
     scripts=['bin/bw'],
     author="Austin Taylor, Nicholas Lupien",
-    author_email="git@austin-taylor.io, nick@infiniteloops.org"
+    author_email="git@austin-taylor.io"
 
 )
