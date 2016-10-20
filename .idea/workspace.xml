@@ -2,20 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2f0e0b78-719b-4f09-9d69-6525f328ada7" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bluewall/utils/configparser.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/bw" afterPath="$PROJECT_DIR$/bin/bw" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bluewall/base/cli_parser.py" afterPath="$PROJECT_DIR$/bluewall/base/cli_parser.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bluewall/base/config.py" afterPath="$PROJECT_DIR$/bluewall/base/config.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bluewall/base/validation.py" afterPath="$PROJECT_DIR$/bluewall/base/validation.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bluewall/environment/rhel.py" afterPath="$PROJECT_DIR$/bluewall/environment/rhel.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bluewall/host_config/confighost.py" afterPath="$PROJECT_DIR$/bluewall/host_config/confighost.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bluewall/interact/set_firewall.py" afterPath="$PROJECT_DIR$/bluewall/interact/set_firewall.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bluewall/utils/enumerate.py" afterPath="$PROJECT_DIR$/bluewall/utils/enumerate.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bluewall/utils/shell.py" afterPath="$PROJECT_DIR$/bluewall/utils/shell.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bluewall/utils/superset.py" afterPath="$PROJECT_DIR$/bluewall/utils/superset.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/configs/exampleconfig.ini" afterPath="$PROJECT_DIR$/configs/exampleconfig.ini" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/requirements.txt" afterPath="$PROJECT_DIR$/requirements.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/setup.py" afterPath="$PROJECT_DIR$/setup.py" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/bluewall.iml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="" />
     </list>
     <ignored path="bluewall.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -536,9 +529,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1176" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15729167" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15729167" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
