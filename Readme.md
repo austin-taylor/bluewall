@@ -33,6 +33,7 @@ Features
 
 #### Getting Started
 ```python
+# BUILT FOR PYTHON 2.x
 sudo python setup.py install
 sudo bw -h (for help)
 ```
