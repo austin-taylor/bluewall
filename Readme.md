@@ -18,7 +18,7 @@ Features
 
 
 #### Commandline
-*bw - bw -c config/example.ini
+*bw -c config/example.ini
 **	See example configuration
 
 #### Utils
