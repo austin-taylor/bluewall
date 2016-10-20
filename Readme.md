@@ -39,7 +39,7 @@ sudo bw -h (for help)
 ```
 
 ### Help
-```python
+```bash
 usage: bw [-h] [-V] [-v] [-r] [-p] [-i] [-d] [-w WINDOWS_CONFIG]
           [-ot TCP_PORTS_OUT] [-ou UDP_PORTS_OUT] [-it TCP_PORTS_IN]
           [-iu UDP_PORTS_IN] [-oh OUTBOUND_HOSTS] [-ih INBOUND_HOSTS]
