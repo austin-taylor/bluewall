@@ -105,6 +105,99 @@ optional arguments:
 ```
 
 
+### Output
+```bash
+[ataylor@localhost bluewall]$ sudo bw -c configs/exampleconfig.ini 
+
+[OK] 192.168.1.101 is a valid setting for dns
+[OK] 172.16.63.1 is a valid setting for gateway_addr
+[OK] 24 is a valid setting for cidr_prefix
+[OK] 192.168.1.1 is a valid setting for nostrike
+[OK] * is a valid setting for rh_mac
+[OK] WINtaylor is a valid setting for win_host
+[OK] 172.16.63.0/24 is a valid setting for target_range
+[OK] 192.168.2.0/24 is a valid setting for target_range
+[OK] 192.168.3.0/24 is a valid setting for target_range
+[OK] 172.16.63.80 is a valid setting for rh_ipaddr
+[OK] RHEL-taylor is a valid setting for rh_host
+[OK] 42.42.42.42 is a valid setting for trusted_host
+[OK] 172.16.63.0/24 is a valid setting for trusted_range
+[OK] 172.16.63.210 is a valid setting for win_ipaddr
+==============================
+[VALID CONFIG] No Errors Detected.
+
+
+writing eth config to /etc/sysconfig/network-scripts/ifcfg-ens33
+
+[CONFIGURATION]
+TYPE="Ethernet"
+BOOTPROTO=none
+NAME=ens33
+DEVICE="ens33"
+ONBOOT=no
+DEFROUTE="yes"
+IPV4_FAILURE_FATAL=no
+DNS1=192.168.1.101
+IPADDR=172.16.63.80
+PREFIX=24
+GATEWAY=172.16.63.1
+MACADDR=00:16:3E:79:93:36
+
+[+] Interface ens33 shutdown.
+[+] Restarting Network Service
+[+] Interface ens33 brought up.
+[+] Rules Flushed!
+[+] Allowing outbound ICMP/traceroute to 172.16.63.0/24...
+[+] Allowing outbound ICMP/traceroute to 192.168.2.0/24...
+[+] Allowing outbound ICMP/traceroute to 192.168.3.0/24...
+[+] Allowing outbound ICMP/traceroute to 172.16.63.0/24...
+[+] Limiting outbound TCP connections to 172.16.63.0/24.
+[+] Limiting outbound TCP connections to 192.168.2.0/24.
+[+] Limiting outbound TCP connections to 192.168.3.0/24.
+[+] Limiting outbound TCP connections to 172.16.63.0/24.
+[+] Limiting outbound UDP connections to 172.16.63.0/24.
+[+] Limiting outbound UDP connections to 192.168.2.0/24.
+[+] Limiting outbound UDP connections to 192.168.3.0/24.
+[+] Limiting outbound UDP connections to 172.16.63.0/24.
+[+] Limiting inbound UDP connections to 172.16.63.0/24.
+[+] Limiting inbound TCP connections to 172.16.63.0/24.
+[+] Allowing traffic for localhost.
+[+] 192.168.1.1 applied to NOSTRIKE
+$ iptables -nvL
+Chain INPUT (policy DROP 0 packets, 0 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+    0     0 DROP       all  --  *      *       192.168.1.1          0.0.0.0/0           
+    0     0 ACCEPT     all  --  *      *       127.0.0.0/8          127.0.0.0/8         
+    0     0 ACCEPT     tcp  --  *      *       0.0.0.0/0            172.16.63.0/24      
+    0     0 ACCEPT     udp  --  *      *       0.0.0.0/0            172.16.63.0/24      
+
+Chain FORWARD (policy DROP 0 packets, 0 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain OUTPUT (policy DROP 0 packets, 0 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+    0     0 DROP       all  --  *      *       0.0.0.0/0            192.168.1.1         
+    0     0 ACCEPT     all  --  *      *       127.0.0.0/8          127.0.0.0/8         
+    0     0 ACCEPT     udp  --  *      *       0.0.0.0/0            172.16.63.0/24      
+    0     0 ACCEPT     udp  --  *      *       0.0.0.0/0            192.168.3.0/24      
+    0     0 ACCEPT     udp  --  *      *       0.0.0.0/0            192.168.2.0/24      
+    0     0 ACCEPT     udp  --  *      *       0.0.0.0/0            172.16.63.0/24      
+    0     0 ACCEPT     tcp  --  *      *       0.0.0.0/0            172.16.63.0/24      
+    0     0 ACCEPT     tcp  --  *      *       0.0.0.0/0            192.168.3.0/24      
+    0     0 ACCEPT     tcp  --  *      *       0.0.0.0/0            192.168.2.0/24      
+    0     0 ACCEPT     tcp  --  *      *       0.0.0.0/0            172.16.63.0/24      
+    0     0 ACCEPT     icmp --  *      *       0.0.0.0/0            172.16.63.0/24       icmptype 0
+    0     0 ACCEPT     icmp --  *      *       0.0.0.0/0            172.16.63.0/24       icmptype 8
+    0     0 ACCEPT     icmp --  *      *       0.0.0.0/0            192.168.3.0/24       icmptype 0
+    0     0 ACCEPT     icmp --  *      *       0.0.0.0/0            192.168.3.0/24       icmptype 8
+    0     0 ACCEPT     icmp --  *      *       0.0.0.0/0            192.168.2.0/24       icmptype 0
+    0     0 ACCEPT     icmp --  *      *       0.0.0.0/0            192.168.2.0/24       icmptype 8
+    0     0 ACCEPT     icmp --  *      *       0.0.0.0/0            172.16.63.0/24       icmptype 0
+    0     0 ACCEPT     icmp --  *      *       0.0.0.0/0            172.16.63.0/24       icmptype 8
+
+[+] Setup Complete.
+```
+
 ### Common Usage
 ```python
 # Setup Initial Environment using Configuration
