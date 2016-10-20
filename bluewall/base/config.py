@@ -1,6 +1,7 @@
 import bluewall.utils.configparser as cp
 from collections import OrderedDict
 
+
 class MultiOrderedDict(OrderedDict):
     def __setitem__(self, key, value):
         if isinstance(value, list) and key in self:

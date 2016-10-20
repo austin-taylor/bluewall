@@ -5,9 +5,7 @@ from Queue import Queue
 from threading import Thread
 
 
-
 class pingSweep(object):
-
     def __init__(self, subnet=None, threads=4, shuffle=False):
         if subnet is not None:
             try:
@@ -22,10 +20,8 @@ class pingSweep(object):
         self.shuffle = random
 
     def shuffle_host(self):
-            random.shuffle(self.subnet)
-            return self.subnet
-
-
+        random.shuffle(self.subnet)
+        return self.subnet
 
     def pinger(self, i, q):
         """PING SUBNET"""
@@ -43,10 +39,9 @@ class pingSweep(object):
             q.task_done()
         return
 
-    #Spawn thread pool
+    # Spawn thread pool
     def thread_pool(self):
         for i in range(self.threads):
-
             worker = Thread(target=self.pinger, args=(i, self.queue))
             worker.setDaemon(True)
             worker.start()
@@ -67,24 +62,8 @@ class pingSweep(object):
         print(str("{alive} alive hosts in subnet".format(alive=self.alive)))
         return self.alive_hosts
 
-alive_hosts = pingSweep(subnet='17.23.84.96/24', threads=10, shuffle=False)
-
-#for row in alive_hosts.subnet:
-#    print row
+alive_hosts = pingSweep(subnet='192.168.0.0/24', threads=10, shuffle=False)
 
 
 
-
-
-alive_hosts.get_alive()
-
-"""
-        if "Destination host unreachable" in output.decode('utf-8'):
-            print(str(all_hosts[i]) + " is Offline")
-        elif "Request timed out" in output.decode('utf-8'):
-            print(str(all_hosts[i]) + " is Offline")
-        else:
-            alive.append(str(all_hosts[i]))
-            print(str(all_hosts[i]) + " is Online")
-
-"""
+#alive_hosts.get_alive()

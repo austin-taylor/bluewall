@@ -1,6 +1,5 @@
 from setuptools import find_packages, setup
 
-
 setup(
     name="Bluewall",
     version="1.0",
@@ -9,6 +8,6 @@ setup(
     packages=find_packages(),
     scripts=['bin/bw'],
     author="Austin Taylor, Nicholas Lupien",
-    author_email="git@austin-taylor.io, nick@infiniteloops.org"
+    author_email="git@austin-taylor.io"
 
 )

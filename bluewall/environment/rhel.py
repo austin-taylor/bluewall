@@ -3,8 +3,8 @@ from bluewall.utils.superset import AOR
 from bluewall.utils.shell import bcolors
 import random
 
-class config(object):
 
+class config(object):
     def __init__(self, VERBOSE=False, DEBUG=False, config=None, legacy=False):
         self.verbose = VERBOSE
         self.debug = DEBUG
@@ -15,7 +15,6 @@ class config(object):
         self.GET_HOSTNAME = "nmcli d | grep ethernet | cut -d' ' -f 1"
         self.ETH_CONFIG_PATH = "/etc/sysconfig/network-scripts/ifcfg-"
         self.SET_HOSTNAME = "hostnamectl set-hostname "
-
 
         if config is not None:
             self.configs = AOR(config=config).configs
@@ -29,14 +28,13 @@ class config(object):
         return eth_if_name
 
     def generate_mac(self):
-        mac = [0x00, 0x16,0x3e,
+        mac = [0x00, 0x16, 0x3e,
                random.randint(0x00, 0x7f),
                random.randint(0x00, 0xff),
-               random.randint(0x00, 0xff) ]
+               random.randint(0x00, 0xff)]
         return ':'.join(map(lambda x: "%02x".upper() % x, mac))
 
     def config_rhel(self):
-        print 'CONFIGURING'
         self.ethIFName = self.get_rhel_eth_name()
 
         if self.ethIFName:
@@ -47,17 +45,25 @@ class config(object):
         self.set_rhel_hostname()
         return
 
+    def value_extract(self, key):
+        setting = ''
+        try:
+            setting = self.configs.get(key)[0]
+        except:
+            pass
+        return setting
+
     def create_rhel_eth_config(self):
         config_path = self.ETH_CONFIG_PATH + self.ethIFName
         if self.verbose or self.debug:
             print "writing eth config to " + config_path
 
-        dns_addr = self.configs.get('dns')[0]
-        rh_ipaddr = self.configs.get('rh_ipaddr')[0]
-        cidr_prefix = self.configs.get('cidr_prefix')[0]
-        gateway_addr = self.configs.get('gateway_addr')[0]
+        dns_addr = self.value_extract('dns')
+        rh_ipaddr = self.value_extract('rh_ipaddr')
+        cidr_prefix = self.value_extract('cidr_prefix')
+        gateway_addr = self.value_extract('gateway_addr')
         try:
-            self.mac_address = self.configs.get('rh_mac')[0]
+            self.mac_address = self.value_extract('rh_mac')
         except:
             self.mac_address = None
 
@@ -79,7 +85,8 @@ class config(object):
             c.write('IPADDR=' + rh_ipaddr + '\n')
             c.write('PREFIX=' + cidr_prefix + '\n')
             c.write('GATEWAY=' + gateway_addr + '\n')
-            if self.mac_address:
+
+            if self.mac_address is not None or self.mac_address != '':
                 if self.mac_address == '*':
                     c.write("MACADDR=" + self.generate_mac() + '\n')
                 else:
@@ -105,7 +112,6 @@ class config(object):
         if self.verbose:
             print("[+] Restarting Network Service")
 
-
     def set_rhel_hostname(self):
         try:
             rh_host = self.configs['rh_host'][0]
@@ -113,7 +119,6 @@ class config(object):
             rh_host = self.it.demand_input("RHEL hostname not defined.  Please enter a hostname: ")
 
         self.it.run_command(self.SET_HOSTNAME + rh_host)
-
 
     def legacy_files(self, trusted_file=None, target_file=None, nostrikes_file=None):
         if self.legacy:
@@ -132,4 +137,4 @@ class config(object):
                 AOR.trusted_parser(nostrikes_file)
                 if self.verbose:
                     print("[+] No-strikes file written to {nostrikes_file}".format(nostrikes_file=nostrikes_file))
-                        # TODO: Call firewall script
+                    # TODO: Call firewall script

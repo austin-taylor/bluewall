@@ -1,5 +1,6 @@
 import os
 
+
 class AOR(object):
     """
     CONFIG PARSER: Takes in file and parses it out.
@@ -7,6 +8,7 @@ class AOR(object):
     TRUSTED: Parses trusted host from config
     NOSTRIKES: Parses no strikes from config
     """
+
     def __init__(self, config=None, DEBUG=False, VERBOSE=False):
 
         self.verbose = VERBOSE
