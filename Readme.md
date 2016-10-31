@@ -9,6 +9,11 @@ Bluewall is a firewall framework designed for offensive and defensive cyber prof
 This framework allows Cybersecurity professionals to quickly setup their environment while 
 staying within their scope.
 
+Credit
+------
+
+Inspired by Andrew Benson's <a href="https://github.com/abenson/hostfw">hostfw iptable generation script</a>.
+
 Features
 --------
 #### Bluewall
