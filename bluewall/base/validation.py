@@ -1,8 +1,7 @@
-import re
 from bluewall.utils.shell import bcolors
 from bluewall.environment.rhel import config
-import ipaddr
-
+from bluewall.utils import ipaddr
+import re
 
 class Validation(object):
     def __init__(self, config=None, verbose=False, field_type=None):

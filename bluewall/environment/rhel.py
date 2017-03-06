@@ -39,7 +39,7 @@ class config(object):
 
         if self.ethIFName:
             self.create_rhel_eth_config()
-            self.cycle_rhel_ethernet(restart_network=True)
+            self.cycle_rhel_ethernet(restart_network=False)
         else:
             self.log_error("Error, ethernet device not found.  RHEL interface not configured.")
         self.set_rhel_hostname()

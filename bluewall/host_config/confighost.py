@@ -167,11 +167,3 @@ class ConfigHost(object):
         timestamp_err = "[" + time.ctime() + "]\t" + err
         self.errlog.append(timestamp_err)
         print timestamp_err
-
-    def run_config(self):
-        self.configs = self.get_config_from_file()
-        self.rhel_config.config_rhel()
-
-        self.ethIFName = None
-        self.configs = {}
-        self.win_config = []

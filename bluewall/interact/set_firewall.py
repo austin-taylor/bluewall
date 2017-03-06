@@ -1,11 +1,11 @@
 from bluewall.base.config import BWConfig
-from bluewall.base.cli_parser import CLIParser
+from bluewall.base.cli_parser import BwCli
 from bluewall.utils.shell import Interact
 from bluewall.utils.shell import bcolors
-import ipaddr
+from bluewall.utils import ipaddr
 
 
-class SetFirewall(CLIParser):
+class SetFirewall(BwCli):
     def __init__(self, config_in=None, verbose=0, log_response=False, execute=True):
         super(SetFirewall, self).__init__(verbose=verbose)
 
@@ -22,26 +22,6 @@ class SetFirewall(CLIParser):
         if self.config_in is not None:
             self.config = BWConfig(self.config_in)
 
-            # Read in config values
-            self.firewall['logexcept'] = self.config.get('firewall', 'LOGEXCEPT')
-            self.firewall['resetconn'] = self.config.get('firewall', 'RESETCONN')
-            self.firewall['allowping'] = self.config.get('firewall', 'ALLOWPING')
-            self.firewall['allowdhcp'] = self.config.get('firewall', 'ALLOWDHCP')
-            self.firewall['ob_tcp'] = self.config.get('firewall', 'OB_TCP')
-            self.firewall['ob_udp'] = self.config.get('firewall', 'OB_UDP')
-            self.firewall['ib_tcp'] = self.config.get('firewall', 'IB_TCP')
-            self.firewall['ib_udp'] = self.config.get('firewall', 'IB_UDP')
-            self.firewall['ob_targs'] = self.config.get('firewall', 'OB_TARGS')
-            self.firewall['ib_targs'] = self.config.get('firewall', 'IB_TARGS')
-            self.firewall['ex_targs'] = self.config.get('firewall', 'EX_TARGS')
-            self.firewall['autotrust'] = self.config.get('firewall', 'AUTOTRUST')
-            self.firewall['allow_all'] = self.config.get('firewall', 'ALLOWALL')
-            self.firewall['deny_all'] = self.config.get('firewall', 'DENYALL')
-            self.firewall['showrules'] = self.config.get('firewall', 'SHOWRULES')
-            self.firewall['printstatus'] = self.config.get('firewall', 'PRINTSTATUS')
-            self.firewall['deftrust'] = self.config.get('firewall', 'DEFTRUST')
-            self.firewall['deftargs'] = self.config.get('firewall', 'DEFTARGS')
-            self.firewall['defexcld'] = self.config.get('firewall', 'DEFEXCLD')
 
     ALLOW_DHCP = '1 -p udp --dport 67:68 --sport 67:68 -j ACCEPT'
     ALLOW_ICMP_8 = '1 -p icmp --icmp-type 8 -j ACCEPT'
@@ -187,7 +167,11 @@ class SetFirewall(CLIParser):
         return
 
     def allow_ping(self):
-        rules = self.rule_builder('I', chain_options='i', append_rule=self.ALLOW_ICMP_8)
+        rules = []
+        rules += self.rule_builder('I', chain_options='i', append_rule=self.ALLOW_ICMP_0)
+        rules += self.rule_builder('I', chain_options='i', append_rule=self.ALLOW_ICMP_8)
+        rules += self.rule_builder('I', chain_options='o', append_rule=self.ALLOW_ICMP_0)
+        rules += self.rule_builder('I', chain_options='o', append_rule=self.ALLOW_ICMP_8)
         self.command_list.extend(rules)
         if self.verbose > 0:
             print("{gp} Respond to pings...".format(gp=self.GREEN_PLUS))

@@ -1,7 +1,6 @@
 from bluewall.interact.set_firewall import SetFirewall
 from bluewall.host_config.confighost import ConfigHost
 from bluewall.utils.shell import bcolors
-import sys
 
 
 class BluewallConfigure(SetFirewall):
@@ -134,19 +133,18 @@ def main():
 
 
     if any(vars(bw.sf.args).values()) is False:
-        ALLOW_NETWORK_TRANSPORT(direction='outbound', protocol='tcp', networks='0.0.0.0')
-        ALLOW_NETWORK_TRANSPORT(direction='outbound', protocol='udp', networks='0.0.0.0')
-        ALLOW_NETWORK_TRANSPORT(direction='inbound', protocol='tcp', networks='0.0.0.0', policy='DROP')
-        ALLOW_NETWORK_TRANSPORT(direction='inbound', protocol='udp', networks='0.0.0.0', policy='DROP')
-        bw.sf.all_icmp_network(networks='0.0.0.0')
         USE_DEFAULT = True
 
     def default_setup():
          if DISALLOW_PING:
             bw.sf.allow_related_conn()
          else:
+            bw.sf.flush_rules()
+            bw.sf.allow_dhcp()
             bw.sf.allow_related_conn()
             bw.sf.allow_ping()
+            bw.sf.allow_network_transport(protocol='tcp', networks='0.0.0.0/0', direction='outbound', policy='ACCEPT')
+            bw.sf.allow_network_transport(protocol='udp', networks='0.0.0.0/0', direction='outbound', policy='ACCEPT')
             bw.sf.allow_localhost()
          return
 
@@ -177,11 +175,14 @@ def main():
 
     bw.sf.command_list = drop_reorder(bw.sf.command_list)
 
-    if SIMULATE:
+    if SIMULATE and bw.sf.command_list:
         SIMULATION = True
-        print "[{info}SIMULATED CONFIGURATION{ENDC}] {WARN}NOT APPLIED{ENDC}".format(info=bcolors.OKBLUE,
+        print("[{info}SIMULATED CONFIGURATION{ENDC}] {WARN}NOT APPLIED{ENDC}").format(info=bcolors.OKBLUE,
                                                                                      WARN=bcolors.WARNING,
                                                                                      ENDC=bcolors.ENDC)
+    elif SIMULATE and not bw.sf.command_list:
+        print("[{WARN}SKIP{ENDC}] NOTHING TO SIMULATE - Please pass a configuration using -c").format(WARN=bcolors.WARNING, ENDC=bcolors.ENDC)
+
         for command in bw.sf.command_list:
             print command
 

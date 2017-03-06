@@ -1,7 +1,7 @@
 import argparse
 
 
-class CLIParser(object):
+class BwCli(object):
     def __init__(self, verbose=True):
         self.verbose = verbose
         self.help_defaults = """
@@ -59,6 +59,52 @@ class CLIParser(object):
         self.parser.add_argument("-S", "--show_rules", action="store_true", help="Show rules after setting")
         self.parser.add_argument("-c", "--config", help="Configuration for firewall")
         self.parser.add_argument("--info", help="About Bluewall", action="store_true")
+
+    def parse_args(self):
+        self.args = self.parser.parse_args()
+
+    def bluewall_info(self):
+        out = self.logo + '\n' + self.about
+        return out
+
+class BsCli(object):
+    def __init__(self, verbose=True):
+        self.verbose = verbose
+        self.help_defaults = """
+        BLUESCAN works with BLUEWALL and will identify all hosts on the network that are alive.
+
+        By passing a config, BLUESCAN will identify all alive hosts on the target networks specified in the configuration file.
+        """
+        self.about = """
+        Version: Bluescan 1.0
+        Authors: Austin Taylor, Nick Lupien
+        Email: git@austintaylor.io, nick.lupien@infiniteloops.net
+        """
+
+        self.logo = """
+         {tb}
+        |  _____ __    _____ _____ _ _ _ _____ __    __      |
+        | |  __ |  |  |  |  |   __| | | |  -  |  |  |  |     |
+        | |  __-|  |__|  |  |   __| | | |     |  |__|  |__   |
+        | |_____|_____|_____|_____|_____|__|__|_____|_____|  |
+        |               ****BLUESCAN****                     |
+        |                                                    |
+         {bb}
+        """.format(bb='\\' * 53, tb='/' * 53)
+
+        self.parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter,
+                                              description="{logo}    A BLUEWALL module to identify alive hosts setup.\n\n".format(
+                                                  logo=self.logo) + self.help_defaults)
+        self.parser.add_argument("-V", "--version", action="version", version='%(prog)s |BLUESCAN| (Version 1.0)',
+                                 help="Display Version")
+        self.parser.add_argument("-t", "--target_range", help="Target of range to identify keep host(s)")
+        self.parser.add_argument("-e", "--exclude", help="Devices not to communicate with during scan")
+        self.parser.add_argument("-r", "--random", help="Randomize IP addresses during scanning")
+        self.parser.add_argument("-v", "--verbose", action="store_true", help="Verbose Mode")
+        self.parser.add_argument("-o", "--output", help="Filename to write to")
+        self.parser.add_argument("-c", "--config", help="Configuration for firewall")
+        self.parser.add_argument("--threads", help="Set how many threads to use (can speed up scan)")
+        self.parser.add_argument("--info", help="About Bluescan", action="store_true")
 
     def parse_args(self):
         self.args = self.parser.parse_args()
