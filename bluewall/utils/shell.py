@@ -71,6 +71,7 @@ class Interact(object):
 
         config_builder = []
         config_builder.append('[local_config]\n')
+        config_builder.append('iface='+iface+'\n')
         for (field_name, friendly_name, min_entries, max_entries, validators) in local_config_fields:
             for x in xrange(1, max_entries+1):
                 mandatory = True
@@ -82,7 +83,6 @@ class Interact(object):
                 config_builder.append(field_name + '=' + user_input + '\n')
 
         config_builder.append('\n[firewall_config]\n')
-        config_builder.append('iface='+iface+'\n')
         for (field_name, friendly_name, min_entries, max_entries, validators) in firewall_config_fields:
             for x in xrange(1, max_entries+1):
                 mandatory = True
