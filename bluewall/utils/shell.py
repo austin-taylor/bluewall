@@ -43,6 +43,7 @@ class Interact(object):
         whip = Whiptail(title="Bluewall Wizard")
 
         local_config_fields = [
+            ('iface', 'RedHat ethernet interface', 1, 1, [validator.eth_iface_check]),
             ('rh_host', 'RedHat hostname', 1, 1, [validator.hostname_check]),
             ('rh_ipaddr', 'RedHat IP Address', 1, 1, [validator.ip_validator]),
             ('netmask', 'Network Mask', 1, 1, [validator.ip_validator]),
@@ -100,7 +101,7 @@ class Interact(object):
         config_text = ''.join(config_builder)
 
         if whip.confirm("Would you like to view your config?", default='yes'):
-            whip.alert_large(config_text, height=50)
+            whip.alert_large(config_text, height=30)
 
         whip.set_title("Bluewall: " + config_filename)
         if whip.confirm("Would you like to execute Bluewall with this config now?", default='no'):
