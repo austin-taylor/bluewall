@@ -34,7 +34,7 @@ class Validation(object):
 
     def eth_iface_check(self, data):
         valid = False
-        all_iface = [iface for iface in Interact().run_command("nmcli d | cut -d' ' -f 1").split('\n')[1:] if face != '']
+        all_iface = [iface for iface in Interact().run_command("nmcli d | cut -d' ' -f 1").split('\n')[1:] if iface != '']
         if data in all_iface:
             valid = True
         return valid
