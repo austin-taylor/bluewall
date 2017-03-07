@@ -1,6 +1,7 @@
 from bluewall.utils.shell import bcolors
 from bluewall.environment.rhel import config
 from bluewall.utils import ipaddr
+from bluewall.utils.shell import Interact
 import re
 
 class Validation(object):
