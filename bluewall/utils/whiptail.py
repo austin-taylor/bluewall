@@ -52,6 +52,12 @@ class Whiptail(object):
     def alert(self, msg):
         self.run('msgbox', msg)
 
+    def alert_large(self, msg, height):
+        tmp_height = self.height
+        self.height = height
+        self.alert(msg)
+        self.height = tmp_height
+
     def view_file(self, path):
         self.run('textbox', path, ['--scrolltext'])
 
@@ -80,3 +86,12 @@ class Whiptail(object):
 
     def checklist(self, msg='', items=(), prefix=' - '):
         return self.showlist('checklist', msg, items, prefix)
+
+    def get_height(self):
+        return self.height
+
+    def set_height(self, height):
+        self.height = height
+
+    def set_title(self, title):
+        self.title = title

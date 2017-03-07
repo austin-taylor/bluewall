@@ -40,7 +40,7 @@ class Interact(object):
     def get_config_whiptail(self, DEBUG=False):
         from bluewall.base.validation import Validation
         validator = Validation()
-        whip = Whiptail()
+        whip = Whiptail(title="Bluewall Wizard")
 
         local_config_fields = [
             ('rh_ipaddr', 'RedHat IP Address', 1, 1, [validator.ip_validator]),
@@ -97,11 +97,11 @@ class Interact(object):
                 continue
 
         config_text = ''.join(config_builder)
-        #whip.alert("Your configuration:\n\n" + config_text)
 
         if whip.confirm("Would you like to view your config?", default='yes'):
-            self.run_command('less ' + config_filename, wait=True)
+            whip.alert_large(config_text, height=50)
 
+        whip.set_title("Bluewall: " + config_filename)
         if whip.confirm("Would you like to execute Bluewall with this config now?", default='no'):
             self.run_command('bw -c ' + config_filename)
 
