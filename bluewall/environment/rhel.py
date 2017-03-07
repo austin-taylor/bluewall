@@ -24,7 +24,8 @@ class config(object):
             print("[*] No config was passed. Some functions may not work properly")
 
     def get_rhel_eth_name(self):
-        eth_if_name = Interact().run_command(self.GET_HOSTNAME).strip()
+        eth_if_name = self.value_extract('iface')
+        #eth_if_name = Interact().run_command(self.GET_HOSTNAME).strip()
         return eth_if_name
 
     def generate_mac(self):
