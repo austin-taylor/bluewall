@@ -23,6 +23,9 @@ class config(object):
         else:
             print("[*] No config was passed. Some functions may not work properly")
 
+    def get_rhel_eth_ifaces(self):
+        return [iface for iface in Interact().run_command("nmcli d | cut -d' ' -f 1").split('\n')[1:] if iface != '']
+
     def get_rhel_eth_name(self):
         eth_if_name = self.value_extract('iface')
         #eth_if_name = Interact().run_command(self.GET_HOSTNAME).strip()
