@@ -1,0 +1,206 @@
+from bluewall.interact.set_firewall import SetFirewall
+from bluewall.host_config.confighost import ConfigHost
+from bluewall.utils.shell import Interact
+from bluewall.utils.shell import bcolors
+
+
+class BluewallConfigure(SetFirewall):
+    def __init__(self):
+        super(BluewallConfigure, self).__init__()
+
+        self.parse_args()
+
+        self.verbose = True
+
+        if self.args.quiet:
+            self.verbose = False
+
+        self.sf = SetFirewall(verbose=self.verbose)
+
+        if self.args.config:
+            self.cm = ConfigHost(config_in=self.args.config, VERBOSE=self.verbose)
+
+
+def main():
+    bw = BluewallConfigure()
+    bw.sf.parse_args()
+    USE_DEFAULT = False
+    SIMULATION = False
+
+    # ARGUMENT ADAPTER
+    WIZARD = bw.sf.args.wizard
+    TCP_PORTS_OUT = bw.sf.args.tcp_ports_out
+    TCP_PORTS_IN =  bw.sf.args.tcp_ports_in
+    UDP_PORTS_OUT = bw.sf.args.udp_ports_out
+    UDP_PORTS_IN = bw.sf.args.udp_ports_in
+    INBOUND_HOSTS = bw.sf.args.inbound_hosts
+    OUTBOUND_HOSTS = bw.sf.args.outbound_hosts
+    EXCLUDE_HOSTS = bw.sf.args.exclude_hosts
+    LOG_EXCEPTIONS = bw.sf.args.log_exceptions
+    DENY_ALL = bw.sf.args.deny_all
+    ALLOW_ALL = bw.sf.args.allow_all
+    INFO = bw.sf.args.info
+    SHOW_RULES = bw.sf.args.show_rules
+    WIN_CONFIG = bw.sf.args.windows_config
+    SIMULATE = bw.sf.args.simulate
+    CONFIG = bw.sf.args.config
+    FLUSH = bw.sf.args.flush
+    RESET = bw.sf.args.reset
+    DISALLOW_PING = bw.sf.args.disallow_ping
+    ALLOW_OUTBOUND_ICMP = bw.sf.args.allow_outbound_icmp
+    DISALLOW_DHCP = bw.sf.args.disallow_dhcp
+
+    # FUNCTION MAPPING
+    ALLOW_NETWORK_TRANSPORT = bw.sf.allow_network_transport
+
+    bw.sf.command_list = []
+
+    if WIZARD:
+        Interact().get_config_whiptail()
+
+    if FLUSH:
+        bw.sf.flush_rules()
+
+    if CONFIG:
+        bw.sf.command_list.extend(bw.cm.redhat_setup())
+        USE_DEFAULT = False
+
+    if RESET:
+        bw.sf.reset_conn()
+        USE_DEFAULT = True
+
+    if DISALLOW_PING:
+        bw.sf.disallow_ping()
+        USE_DEFAULT = False
+
+    if ALLOW_OUTBOUND_ICMP:
+        if bw.verbose:
+            status = 1
+        else:
+            status = 0
+        bw.sf.all_icmp_network(status)
+        USE_DEFAULT = True
+
+    if DISALLOW_DHCP:
+        bw.disallow_dhcp()
+        USE_DEFAULT = True
+
+    if TCP_PORTS_OUT and not OUTBOUND_HOSTS:
+        ALLOW_NETWORK_TRANSPORT(protocol='tcp', direction='outbound', ports=[TCP_PORTS_OUT])
+
+    if UDP_PORTS_OUT and not OUTBOUND_HOSTS:
+        ALLOW_NETWORK_TRANSPORT(protocol='udp', direction='outbound', ports=[UDP_PORTS_OUT])
+
+    if TCP_PORTS_IN and not INBOUND_HOSTS:
+        ALLOW_NETWORK_TRANSPORT(protocol='tcp', direction='inbound', ports=[TCP_PORTS_IN])
+
+    if UDP_PORTS_IN and not INBOUND_HOSTS:
+        ALLOW_NETWORK_TRANSPORT(protocol='udp', direction='inbound', ports=[UDP_PORTS_IN])
+
+    if OUTBOUND_HOSTS:
+        NO_PORT = True
+        if TCP_PORTS_OUT:
+            NO_PORT = True
+            ALLOW_NETWORK_TRANSPORT(protocol='tcp', direction='outbound', ports=[TCP_PORTS_OUT], networks=OUTBOUND_HOSTS)
+        if UDP_PORTS_OUT:
+            NO_PORT = True
+            ALLOW_NETWORK_TRANSPORT(protocol='udp', direction='outbound', ports=[UDP_PORTS_OUT], networks=OUTBOUND_HOSTS)
+        if NO_PORT:
+            ALLOW_NETWORK_TRANSPORT(protocol='tcp', direction='outbound', networks=OUTBOUND_HOSTS)
+            ALLOW_NETWORK_TRANSPORT(protocol='udp', direction='outbound', networks=OUTBOUND_HOSTS)
+        USE_DEFAULT = False
+
+    if INBOUND_HOSTS:
+        NO_PORT = True
+        if TCP_PORTS_IN:
+            NO_PORT = False
+            ALLOW_NETWORK_TRANSPORT(protocol='tcp', direction='inbound', ports=[TCP_PORTS_IN], networks=INBOUND_HOSTS)
+        if UDP_PORTS_IN:
+            NO_PORT = False
+            ALLOW_NETWORK_TRANSPORT(protocol='udp', direction='inbound', ports=[UDP_PORTS_IN], networks=INBOUND_HOSTS)
+        if NO_PORT:
+            ALLOW_NETWORK_TRANSPORT(protocol='tcp', direction='inbound', networks=INBOUND_HOSTS)
+            ALLOW_NETWORK_TRANSPORT(protocol='udp', direction='inbound', networks=INBOUND_HOSTS)
+        USE_DEFAULT = False
+
+
+    if LOG_EXCEPTIONS:
+        bw.sf.log_exceptions()
+        USE_DEFAULT = True
+
+    if DENY_ALL:
+        bw.sf.deny_all()
+        USE_DEFAULT = False
+
+    if ALLOW_ALL:
+        bw.sf.allow_all()
+        USE_DEFAULT = False
+
+
+    if any(vars(bw.sf.args).values()) is False:
+        USE_DEFAULT = True
+
+    def default_setup():
+         if DISALLOW_PING:
+            bw.sf.allow_related_conn()
+         else:
+            bw.sf.flush_rules()
+            bw.sf.allow_dhcp()
+            bw.sf.allow_related_conn()
+            bw.sf.allow_ping()
+            bw.sf.allow_network_transport(protocol='tcp', networks='0.0.0.0/0', direction='outbound', policy='ACCEPT')
+            bw.sf.allow_network_transport(protocol='udp', networks='0.0.0.0/0', direction='outbound', policy='ACCEPT')
+            bw.sf.allow_localhost()
+         return
+
+
+    if EXCLUDE_HOSTS:
+        bw.sf.set_nostrike(EXCLUDE_HOSTS)
+
+    if WIN_CONFIG and not CONFIG:
+        bw.sf.parser.error("Config (-c) must be provided when using -w")
+
+    if WIN_CONFIG and CONFIG:
+        bw.cm.config_win(WIN_CONFIG)
+        USE_DEFAULT = True
+
+    if INFO:
+        print bw.sf.bluewall_info()
+        USE_DEFAULT = False
+
+    if USE_DEFAULT:
+        default_setup()
+
+    def drop_reorder(command_list):
+        drop_list = []
+        for i, command in enumerate(command_list):
+            if 'DROP' in command:
+                drop_list.append(command_list.pop(i))
+        return command_list + drop_list
+
+    bw.sf.command_list = drop_reorder(bw.sf.command_list)
+
+    if SIMULATE and bw.sf.command_list:
+        SIMULATION = True
+        print("[{info}SIMULATED CONFIGURATION{ENDC}] {WARN}NOT APPLIED{ENDC}").format(info=bcolors.OKBLUE,
+                                                                                     WARN=bcolors.WARNING,
+                                                                                     ENDC=bcolors.ENDC)
+    elif SIMULATE and not bw.sf.command_list:
+        print("[{WARN}SKIP{ENDC}] NOTHING TO SIMULATE - Please pass a configuration using -c").format(WARN=bcolors.WARNING, ENDC=bcolors.ENDC)
+
+        for command in bw.sf.command_list:
+            print command
+
+    if not SIMULATION:
+        bw.sf.process_commands()
+        USE_DEFAULT = False
+
+    if SHOW_RULES:
+        bw.sf.show_rules()
+        USE_DEFAULT = False
+
+
+
+
+if __name__ == "__main__":
+    main()
