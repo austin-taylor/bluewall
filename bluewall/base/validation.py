@@ -9,7 +9,8 @@ class Validation(object):
             self.config = config
         self.verbose = verbose
         if field_type is None:
-            self.field_type = {'rh_ipaddr': 'ip',
+            self.field_type = {'iface': 'eth_iface',
+                               'rh_ipaddr': 'ip',
                                'win_ipaddr': 'ip',
                                'rh_mac': 'mac',
                                'dns': 'ip',
@@ -28,6 +29,13 @@ class Validation(object):
         valid = False
         if re.match('^[a-zA-Z0-9-]*$', data):
             valid = True
+        return valid
+
+    def eth_iface_check(self, data):
+        valid = False
+        for entry in Interact().run_command("nmcli d | cut -d' ' -f 1").split('\n'):
+            if data in entry:
+                valid = True
         return valid
 
     def mac_check(self, data):
@@ -89,6 +97,8 @@ class Validation(object):
                             valid = self.hostname_check(value)
                         elif key_map[key] == 'mac':
                             valid = self.mac_check(value)
+                        elif key_map[key] == 'eth_iface':
+                            valid = self.eth_iface_check(value)
                         else:
                             pass
                         if valid == False:
