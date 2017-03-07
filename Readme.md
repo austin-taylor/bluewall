@@ -197,7 +197,7 @@ Chain OUTPUT (policy DROP 0 packets, 0 bytes)
 ```
 
 ### Common Usage
-```python
+```bash
 # Setup Initial Environment using Configuration
 sudo bw -c config/hostconfig.ini
 
