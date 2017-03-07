@@ -37,14 +37,14 @@ Features
 * No Strike - Devices your computer should not communicate with
 
 #### Setup
-```python
+
+```bash
 # BUILT FOR PYTHON 2.x
 sudo python setup.py install
 sudo bw -h (for help)
 ```
 
 ## Getting Started
-
 
 ```bash
 # Setup Initial Environment using Configuration
@@ -130,6 +130,37 @@ optional arguments:
   --info                About Bluewall
 ```
 
+### Config Example
+
+example.ini
+```
+[local_config]
+iface=em1
+rh_host=RHEL-Example
+rh_ipaddr=192.168.1.42
+netmask=255.255.255.0
+gateway_addr=172.16.63.1
+dns=8.8.8.8
+#win_ipaddr=192.168.1.42 - Optional windows IP Address
+#
+# Optional Windows host (Bluewall will generate a config file for windows)
+win_host=WINExample
+# MAC Addresses must be ALL CAPS Valid: AA:93:AB:EF:00:01
+# rh_mac=* will generate random MAC address
+rh_mac=*
+
+[firewall_config]
+# Target Range are networks you want to allow outbound communication with.
+target_range=172.16.63.0/24
+target_range=192.168.2.0/24
+#
+# Nostrike addresses are devices your computer should NOT communicate with
+nostrike=192.168.2.1
+#
+# Trusted Range are networks you wish to have bi-directional communication with
+trusted_range=172.16.63.0/24
+trusted_host=42.42.42.42
+```
 
 ### Output
 ```bash
