@@ -3,12 +3,16 @@ import os
 from bluewall.utils.whiptail import Whiptail
 
 class Interact(object):
-    def run_command(self, cmd, VERBOSE=0, DEBUG=False):
+    def run_command(self, cmd, VERBOSE=0, DEBUG=False, wait=False):
         if VERBOSE < 2:
             cmd += " 2>/dev/null"
         if DEBUG or VERBOSE > 1:
             print "$ " + cmd
-        output = subprocess.check_output(cmd, shell=True)
+        if wait:
+            output = subprocess.Popen(cmd, shell=True)
+            output.wait()
+        else:
+            output = subprocess.check_output(cmd, shell=True)
         if DEBUG or VERBOSE > 1:
             print output
         return output
@@ -42,7 +46,7 @@ class Interact(object):
             ('rh_ipaddr', 'RedHat IP Address', 1, 1, [validator.ip_validator]),
             ('netmask', 'Network Mask', 1, 1, [validator.ip_validator]),
             ('gateway_addr', 'Gateway Address', 1, 1, [validator.ip_validator]),
-            ('mac_addr', 'MAC Address (leave blank for random)', 0, 1, [validator.mac_check])
+            ('mac_addr', 'MAC Address (enter * for random)', 0, 1, [validator.mac_check])
         ]
 
         firewall_config_fields = [
@@ -69,7 +73,7 @@ class Interact(object):
                     break
                 config_builder.append(field_name + '=' + user_input + '\n')
 
-        config_builder.append('\n\n[firewall_config]\n')
+        config_builder.append('\n[firewall_config]\n')
         for (field_name, friendly_name, min_entries, max_entries, validators) in firewall_config_fields:
             for x in xrange(1, max_entries+1):
                 mandatory = True
@@ -80,19 +84,29 @@ class Interact(object):
                     break
                 config_builder.append(field_name + '=' + user_input + '\n')
 
-        if DEBUG:
-            print config_builder
-
         error_input = ''
         while True:
             msg = error_input + "Enter a filename to output config: "
             try:
-                with open(self.get_whiptail_input(whip, msg), 'w') as config_file:
+                config_filename = self.get_whiptail_input(whip, msg)
+                with open(config_filename, 'w') as config_file:
                     config_file.writelines(config_builder)
                 break
             except IOError:
                 error_input = "Invalid filename.\n\n"
                 continue
+
+        config_text = ''.join(config_builder)
+        #whip.alert("Your configuration:\n\n" + config_text)
+
+        if whip.confirm("Would you like to view your config?", default='yes'):
+            self.run_command('less ' + config_filename, wait=True)
+
+        if whip.confirm("Would you like to execute Bluewall with this config now?", default='no'):
+            self.run_command('bw -c ' + config_filename)
+
+        # escape all other bw function for this instance
+        exit()
 
 
     def get_whiptail_input(self, whip, msg):
