@@ -1,4 +1,4 @@
-<p align="center"><img src="//www.austintaylor.io/images/bluewall.png"> </p>
+<p align="center"><img src="http://www.austintaylor.io/images/bluewall.png"></p>
 
 BLUEWALL
 ======
