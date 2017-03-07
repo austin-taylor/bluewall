@@ -1,0 +1,55 @@
+from bluewall.utils.enumerate import pingSweep
+from bluewall.base.cli_parser import BsCli
+from bluewall.utils.shell import bcolors
+from bluewall.host_config.confighost import ConfigHost
+
+#def scan_targets(network=None):
+#    if network:
+#        pass
+
+class blueScan(pingSweep):
+    def __init__(self):
+        super(blueScan, self).__init__()
+
+        self.parse_args()
+
+        self.verbose = False
+
+
+        if self.args.config:
+            self.cm = ConfigHost(config_in=self.args.config, VERBOSE=self.verbose)
+
+
+def main():
+    bs = blueScan()
+    bs.parse_args()
+    TARGET_RANGES = []
+    CONFIG = bs.args.config
+    THREADS = bs.args.threads
+    RANDOM = bs.args.random
+    SHUFFLE = False
+
+    if RANDOM:
+        SHUFFLE = True
+
+
+    if bs.args.target_range:
+        if ',' in bs.args.target_range:
+            TARGET_RANGE = [t.strip() for t in bs.args.target_range.split(',')]
+            TARGET_RANGES.extend(TARGET_RANGE)
+        else:
+            TARGET_RANGES.append(bs.args.target_range)
+
+    if CONFIG:
+        TARGET_RANGE_CONFIG = bs.cm.target_ranges
+        TARGET_RANGES.extend(TARGET_RANGE_CONFIG)
+
+    if TARGET_RANGES:
+        for row in TARGET_RANGES:
+            ps = pingSweep(subnet=row, shuffle=RANDOM, threads=50, verbose=True)
+            ps.get_alive()
+
+
+
+if __name__ == "__main__":
+    main()
