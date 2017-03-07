@@ -36,15 +36,35 @@ Features
 * Trusted Host - Bidirectional communication
 * No Strike - Devices your computer should not communicate with
 
-#### Getting Started
+#### Setup
 ```python
 # BUILT FOR PYTHON 2.x
 sudo python setup.py install
 sudo bw -h (for help)
 ```
 
-### Help
+## Getting Started
+
+
 ```bash
+# Setup Initial Environment using Configuration
+sudo bw -c config/hostconfig.ini
+
+# Export optional windows configuration
+sudo bw -c config/hostconfig.ini -w autoconfig.ps1
+
+# Add additional inbound host or ranges
+sudo bw -ih 192.168.0.3,192.168.1.0/24
+
+# Exclude host to communicate with
+sudo bw -eh 192.168.1.1
+
+# Super easy wizard mode
+sudo bw --wizard
+```
+
+### Help
+```
 usage: bw [-h] [-V] [-v] [-r] [-p] [-i] [-d] [-w WINDOWS_CONFIG]
           [-ot TCP_PORTS_OUT] [-ou UDP_PORTS_OUT] [-it TCP_PORTS_IN]
           [-iu UDP_PORTS_IN] [-oh OUTBOUND_HOSTS] [-ih INBOUND_HOSTS]
@@ -195,21 +215,4 @@ Chain OUTPUT (policy DROP 0 packets, 0 bytes)
 [+] Setup Complete.
 ```
 
-### Common Usage
-```bash
-# Setup Initial Environment using Configuration
-sudo bw -c config/hostconfig.ini
-
-# Export optional windows configuration
-sudo bw -c config/hostconfig.ini -w autoconfig.ps1
-
-# Add additional inbound host or ranges
-sudo bw -ih 192.168.0.3,192.168.1.0/24
-
-# Exclude host to communicate with
-sudo bw -eh 192.168.1.1
-
-# Super easy wizard mode
-sudo bw --wizard
-```
 
