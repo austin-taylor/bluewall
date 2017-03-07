@@ -1,4 +1,5 @@
-<center><img src="http://www.iconsdb.com/icons/preview/caribbean-blue/firewall-xxl.png"> </center>
+<p align="center">
+<img src="http://www.iconsdb.com/icons/preview/caribbean-blue/firewall-xxl.png"> </center>
 
 BLUEWALL
 ======
@@ -6,6 +7,11 @@ BLUEWALL
 Bluewall is a firewall framework designed for offensive and defensive cyber professionals.
 This framework allows Cybersecurity professionals to quickly setup their environment while 
 staying within their scope.
+
+Credit
+-------
+Inspired by Andrew Benson's <a href="https://github.com/abenson/hostfw">hostfw iptable generation script</a>.
+
 
 Features
 --------
