@@ -105,6 +105,7 @@ optional arguments:
   -A, --allow_all       Absolute allow all
   -F, --flush           Flush IPTables
   -S, --show_rules      Show rules after setting
+  --wizard              Addressing and firewall wizard mode
   -c CONFIG, --config CONFIG
                         Configuration for firewall
   --info                About Bluewall
@@ -208,5 +209,8 @@ sudo bw -ih 192.168.0.3,192.168.1.0/24
 
 # Exclude host to communicate with
 sudo bw -eh 192.168.1.1
+
+# Super easy wizard mode
+sudo bw --wizard
 ```
 
