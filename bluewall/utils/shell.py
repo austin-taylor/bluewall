@@ -46,7 +46,7 @@ class Interact(object):
             ('rh_ipaddr', 'RedHat IP Address', 1, 1, [validator.ip_validator]),
             ('netmask', 'Network Mask', 1, 1, [validator.ip_validator]),
             ('gateway_addr', 'Gateway Address', 1, 1, [validator.ip_validator]),
-            ('mac_addr', 'MAC Address (enter * for random)', 0, 1, [validator.mac_check])
+            ('mac_addr', 'MAC Address (enter * for random)', 1, 1, [validator.mac_check])
         ]
 
         firewall_config_fields = [
