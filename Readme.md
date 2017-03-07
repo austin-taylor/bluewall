@@ -209,5 +209,8 @@ sudo bw -ih 192.168.0.3,192.168.1.0/24
 
 # Exclude host to communicate with
 sudo bw -eh 192.168.1.1
+
+# Super easy wizard mode
+sudo bw --wizard
 ```
 
