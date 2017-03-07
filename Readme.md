@@ -105,6 +105,7 @@ optional arguments:
   -A, --allow_all       Absolute allow all
   -F, --flush           Flush IPTables
   -S, --show_rules      Show rules after setting
+  --wizard              Addressing and firewall wizard mode
   -c CONFIG, --config CONFIG
                         Configuration for firewall
   --info                About Bluewall
