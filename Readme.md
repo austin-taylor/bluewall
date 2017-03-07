@@ -15,26 +15,27 @@ Inspired by Andrew Benson's <a href="https://github.com/abenson/hostfw">hostfw i
 Features
 --------
 #### Bluewall
-*   Configure Firewall
-*   Configure Hostname
-*   Configure Interface(s)
+    * Configure Firewall
+    * Configure Hostname
+    * Configure Interface(s)
 
 #### Supported Operating Systems
-*   Redhat/CentOS
-*	**Windows configuration can be generated but not executed.
+    * Redhat/CentOS
+    * Windows configuration can be generated but not executed.
 
 
 #### Commandline
-*bw -c config/example.ini
-**	See example configuration
+    *  bw -c config/example.ini
+    ** See example configuration
 
 #### Utils
-*	Enumerate - Identify live hosts inside your network (coming soon)
+    * Enumerate - Identify live hosts inside your network (coming soon)
 
 #### Symantecs
-* Target Host - Outbound communication
-* Trusted Host - Bidirectional communication
-* No Strike - Devices your computer should not communicate with
+
+    * Target Host - Outbound communication
+    * Trusted Host - Bidirectional communication
+    * No Strike - Devices your computer should not communicate with
 
 #### Setup
 
