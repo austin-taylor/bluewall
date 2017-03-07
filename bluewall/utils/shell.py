@@ -1,6 +1,6 @@
 import subprocess
 import os
-
+from bluewall.utils.whiptail import Whiptail
 
 class Interact(object):
     def run_command(self, cmd, VERBOSE=0, DEBUG=False):
@@ -33,6 +33,83 @@ class Interact(object):
             exit()
         return
 
+    def get_config_whiptail(self, DEBUG=False):
+        from bluewall.base.validation import Validation
+        validator = Validation()
+        whip = Whiptail()
+
+        local_config_fields = [
+            ('rh_ipaddr', 'RedHat IP Address', 1, 1, [validator.ip_validator]),
+            ('netmask', 'Network Mask', 1, 1, [validator.ip_validator]),
+            ('gateway_addr', 'Gateway Address', 1, 1, [validator.ip_validator]),
+            ('mac_addr', 'MAC Address (leave blank for random)', 0, 1, [validator.mac_check])
+        ]
+
+        firewall_config_fields = [
+            ('target_range', 'Target range (enter blank when finished)', 0, 100, [validator.network_validator]),
+            ('target_host', 'Target host (enter blank when finished)', 0, 100, [validator.ip_validator]),
+            ('trusted_range', 'Trusted range (enter blank when finished)', 0, 100, [validator.network_validator]),
+            ('trusted_host', 'Trusted host (enter blank when finished)', 0, 100, [validator.ip_validator]),
+            ('nostrike_range', 'No-strike range (enter blank when finished)', 0, 100, [validator.network_validator]),
+            ('nostrike_host', 'No-strike host (enter blank when finished)', 0, 100, [validator.ip_validator])
+        ]
+
+        if DEBUG:
+            print "Getting config via whiptail"
+
+        config_builder = []
+        config_builder.append('[local_config]\n')
+        for (field_name, friendly_name, min_entries, max_entries, validators) in local_config_fields:
+            for x in xrange(1, max_entries+1):
+                mandatory = True
+                if x > min_entries:
+                    mandatory = False
+                user_input = self.demand_whiptail_input(whip, friendly_name, validators, mandatory)
+                if user_input == '':
+                    break
+                config_builder.append(field_name + '=' + user_input + '\n')
+
+        config_builder.append('\n\n[firewall_config]\n')
+        for (field_name, friendly_name, min_entries, max_entries, validators) in firewall_config_fields:
+            for x in xrange(1, max_entries+1):
+                mandatory = True
+                if x > min_entries:
+                    mandatory = False
+                user_input = self.demand_whiptail_input(whip, friendly_name, validators, mandatory)
+                if user_input == '':
+                    break
+                config_builder.append(field_name + '=' + user_input + '\n')
+
+        if DEBUG:
+            print config_builder
+
+        error_input = ''
+        while True:
+            msg = error_input + "Enter a filename to output config: "
+            try:
+                with open(self.get_whiptail_input(whip, msg), 'w') as config_file:
+                    config_file.writelines(config_builder)
+                break
+            except IOError:
+                error_input = "Invalid filename.\n\n"
+                continue
+
+
+    def get_whiptail_input(self, whip, msg):
+        return whip.prompt(msg)
+
+    def demand_whiptail_input(self, whip, msg, validator_callbacks, mandatory=True):
+        user_input = None
+        error_input = ''
+        while True:
+            user_input = whip.prompt(error_input + msg)
+            if user_input.strip() == '' and mandatory == False:
+                return ''
+            for callback in validator_callbacks:
+                if callback(user_input):
+                    return user_input
+            error_input = "Your entry was invalid.\n\n"
+        return None
 
 class bcolors:
     HEADERS = '\033[95m'

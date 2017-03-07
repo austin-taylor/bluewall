@@ -38,7 +38,13 @@ class Validation(object):
             valid = True
         return valid
 
-
+    def cidr_prefix_check(self, data):
+        try:
+            if int(data) > 1 and int(data) <= 32:
+                return True
+        except:
+            return False
+        return False
 
     def network_validator(self, network, boolean=True):
         try:

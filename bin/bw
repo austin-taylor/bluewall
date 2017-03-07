@@ -1,5 +1,6 @@
 from bluewall.interact.set_firewall import SetFirewall
 from bluewall.host_config.confighost import ConfigHost
+from bluewall.utils.shell import Interact
 from bluewall.utils.shell import bcolors
 
 
@@ -27,6 +28,7 @@ def main():
     SIMULATION = False
 
     # ARGUMENT ADAPTER
+    WIZARD = bw.sf.args.wizard
     TCP_PORTS_OUT = bw.sf.args.tcp_ports_out
     TCP_PORTS_IN =  bw.sf.args.tcp_ports_in
     UDP_PORTS_OUT = bw.sf.args.udp_ports_out
@@ -53,6 +55,9 @@ def main():
 
     bw.sf.command_list = []
 
+    if WIZARD:
+        Interact().get_config_whiptail()
+
     if FLUSH:
         bw.sf.flush_rules()
 
@@ -70,10 +75,10 @@ def main():
 
     if ALLOW_OUTBOUND_ICMP:
         if bw.verbose:
-            status = 0
-        else:
             status = 1
-        bw.sf.all_icmp_network(status=0)
+        else:
+            status = 0
+        bw.sf.all_icmp_network(status)
         USE_DEFAULT = True
 
     if DISALLOW_DHCP:
@@ -193,6 +198,8 @@ def main():
     if SHOW_RULES:
         bw.sf.show_rules()
         USE_DEFAULT = False
+
+
 
 
 if __name__ == "__main__":

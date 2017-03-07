@@ -57,6 +57,7 @@ class BwCli(object):
         self.parser.add_argument("-A", "--allow_all", action="store_true", help="Absolute allow all")
         self.parser.add_argument("-F", "--flush", action="store_true", help="Flush IPTables")
         self.parser.add_argument("-S", "--show_rules", action="store_true", help="Show rules after setting")
+        self.parser.add_argument("--wizard", action="store_true", help="Addressing and firewall wizard mode")
         self.parser.add_argument("-c", "--config", help="Configuration for firewall")
         self.parser.add_argument("--info", help="About Bluewall", action="store_true")
 
