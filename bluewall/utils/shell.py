@@ -43,6 +43,7 @@ class Interact(object):
         whip = Whiptail(title="Bluewall Wizard")
 
         local_config_fields = [
+            ('rh_host', 'RedHat hostname', 1, 1, [validator.hostname_check]),
             ('rh_ipaddr', 'RedHat IP Address', 1, 1, [validator.ip_validator]),
             ('netmask', 'Network Mask', 1, 1, [validator.ip_validator]),
             ('gateway_addr', 'Gateway Address', 1, 1, [validator.ip_validator]),
