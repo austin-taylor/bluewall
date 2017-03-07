@@ -37,13 +37,19 @@ class Interact(object):
             exit()
         return
 
+    def get_rhel_eth_ifaces(self):
+        return [iface for iface in Interact().run_command("nmcli d | cut -d' ' -f 1").split('\n')[1:] if iface != '']
+    
     def get_config_whiptail(self, DEBUG=False):
         from bluewall.base.validation import Validation
         validator = Validation()
         whip = Whiptail(title="Bluewall Wizard")
 
+        all_ifaces = self.get_rhel_eth_ifaces()
+        iface = whip.radiolist('Ethernet interface (press <space> to select): ', items=all_ifaces)[0]
+
         local_config_fields = [
-            ('iface', 'RedHat ethernet interface', 1, 1, [validator.eth_iface_check]),
+            #('iface', 'RedHat ethernet interface', 1, 1, [validator.eth_iface_check]),
             ('rh_host', 'RedHat hostname', 1, 1, [validator.hostname_check]),
             ('rh_ipaddr', 'RedHat IP Address', 1, 1, [validator.ip_validator]),
             ('netmask', 'Network Mask', 1, 1, [validator.ip_validator]),
@@ -76,6 +82,7 @@ class Interact(object):
                 config_builder.append(field_name + '=' + user_input + '\n')
 
         config_builder.append('\n[firewall_config]\n')
+        config_builder.append('iface='+iface+'\n')
         for (field_name, friendly_name, min_entries, max_entries, validators) in firewall_config_fields:
             for x in xrange(1, max_entries+1):
                 mandatory = True
