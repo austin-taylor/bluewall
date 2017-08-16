@@ -162,7 +162,6 @@ def main():
 
     if WIN_CONFIG and CONFIG:
         bw.cm.config_win(WIN_CONFIG)
-        USE_DEFAULT = True
 
     if INFO:
         print bw.sf.bluewall_info()
