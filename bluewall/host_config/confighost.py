@@ -119,6 +119,7 @@ class ConfigHost(object):
 
         # set Win firewall rules
         self.win_config.append('net start "windows firewall"')
+        self.win_config.append('netsh advfirewall set allprofiles state on')
         self.win_config.append('netsh advfirewall firewall delete rule name=all')
         self.win_config.append('netsh advfirewall set allprofiles firewallpolicy "blockinbound,blockoutbound"')
         trusted_entries = '"' + ','.join(
