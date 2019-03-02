@@ -119,7 +119,7 @@ def main():
             NO_PORT = False
             ALLOW_NETWORK_TRANSPORT(protocol='udp', direction='inbound', ports=[UDP_PORTS_IN], networks=INBOUND_HOSTS)
         if NO_PORT:
-            ALLOW_NETWORK_TRANSPORT(protocol='tcp', direction='inbound', networks=INBOUND_HOSTS)
+            ALLOW_NETWORK_TRANSPORT(protocol='tcp', trusted=True, direction='inbound', networks=INBOUND_HOSTS)
             ALLOW_NETWORK_TRANSPORT(protocol='udp', direction='inbound', networks=INBOUND_HOSTS)
         USE_DEFAULT = False
 
