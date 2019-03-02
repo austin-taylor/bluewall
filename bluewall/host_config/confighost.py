@@ -38,7 +38,7 @@ class ConfigHost(object):
 
     def set_trusted(self):
         rules = []
-        rules += self.set_firewall.allow_network_transport(direction='outbound', protocol='tcp',
+        rules += self.set_firewall.allow_network_transport(direction='inbound', trusted=True, protocol='tcp',
                                                            networks=self.target_ranges)
         rules += self.set_firewall.allow_network_transport(direction='outbound', protocol='tcp', ports=[80],
                                                            networks=self.target_ranges)
