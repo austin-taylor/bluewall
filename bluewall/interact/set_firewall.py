@@ -237,7 +237,7 @@ class SetFirewall(BwCli):
                                                                                                 protocol=protocol.upper()))
         return
 
-    def allow_network_transport(self, direction=None, protocol='tcp', ports=[], networks='0.0.0.0', policy='ACCEPT'):
+    def allow_network_transport(self, direction=None, trusted=False, protocol='tcp', ports=[], networks='0.0.0.0', policy='ACCEPT'):
         if direction is None:
             raise Exception("[-] Must specify a direction!\nOptions: inbound, outbound")
 
@@ -249,6 +249,10 @@ class SetFirewall(BwCli):
         allowed_protocols = ['tcp', 'udp']
         ports = ','.join([str(p) for p in ports])
         networks = self.data_validator(networks)
+        # Adding ability to switch between source and destination
+        path = 'd'
+        if trusted:
+            path = 's'
 
         if protocol not in allowed_protocols:
             raise Exception('[!] Protocol must be udp or tcp')
