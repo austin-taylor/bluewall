@@ -67,15 +67,15 @@ class ConfigHost(object):
             self.set_firewall.all_icmp_network(status=0, networks=outbound)
             self.set_firewall.allow_network_transport(direction='outbound', protocol='tcp', networks=outbound)
             self.set_firewall.allow_network_transport(direction='outbound', protocol='udp', networks=outbound)
-            self.set_firewall.allow_network_transport(direction='inbound', protocol='udp', networks=self.trusted_range)
-            self.set_firewall.allow_network_transport(direction='inbound', protocol='tcp', networks=self.trusted_range)
+            self.set_firewall.allow_network_transport(direction='inbound', trusted=True, protocol='udp', networks=self.trusted_range)
+            self.set_firewall.allow_network_transport(direction='inbound', trusted=True, protocol='tcp', networks=self.trusted_range)
             self.set_firewall.allow_localhost()
         elif self.target_ranges != '' and self.trusted_range != '':
             self.set_firewall.allow_network_transport(direction='outbound', protocol='tcp', networks=outbound)
             self.set_firewall.allow_network_transport(direction='outbound', protocol='udp', networks=outbound)
         elif self.trusted_range != '' and self.target_ranges != '':
-            self.set_firewall.allow_network_transport(direction='inbound', protocol='udp', networks=self.trusted_range)
-            self.set_firewall.allow_network_transport(direction='inbound', protocol='tcp', networks=self.trusted_range)
+            self.set_firewall.allow_network_transport(direction='inbound', trusted=True, protocol='udp', networks=self.trusted_range)
+            self.set_firewall.allow_network_transport(direction='inbound', trusted=True, protocol='tcp', networks=self.trusted_range)
         else:
             print("[{warn}INFO{end}] No target or trusted ranges detected in configuration".format(warn=bcolors.WARNING, endc=bcolors.ENDC))
 
