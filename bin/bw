@@ -181,6 +181,9 @@ def main():
 
     if SIMULATE and bw.sf.command_list:
         SIMULATION = True
+        print("[{info}SHOWING SIMULATED CONFIG{ENDC}]").format(info=bcolors.OKBLUE, ENDC=bcolors.ENDC)
+        for command in bw.sf.command_list:
+            print(command)
         print("[{info}SIMULATED CONFIGURATION{ENDC}] {WARN}NOT APPLIED{ENDC}").format(info=bcolors.OKBLUE,
                                                                                      WARN=bcolors.WARNING,
                                                                                      ENDC=bcolors.ENDC)
@@ -188,7 +191,7 @@ def main():
         print("[{WARN}SKIP{ENDC}] NOTHING TO SIMULATE - Please pass a configuration using -c").format(WARN=bcolors.WARNING, ENDC=bcolors.ENDC)
 
         for command in bw.sf.command_list:
-            print command
+            print(command)
 
     if not SIMULATION:
         bw.sf.process_commands()
