@@ -61,7 +61,7 @@ class ConfigHost(object):
         return
 
     def autotrust(self):
-        if self.target_ranges != '' and self.trusted_range != '':
+        if self.target_ranges and self.trusted_range:
             outbound = self.target_ranges + self.trusted_range
             # Based on scan profile
             self.set_firewall.all_icmp_network(status=0, networks=outbound)
@@ -70,10 +70,10 @@ class ConfigHost(object):
             self.set_firewall.allow_network_transport(direction='inbound', trusted=True, protocol='udp', networks=self.trusted_range)
             self.set_firewall.allow_network_transport(direction='inbound', trusted=True, protocol='tcp', networks=self.trusted_range)
             self.set_firewall.allow_localhost()
-        elif self.target_ranges != '' and self.trusted_range != '':
+        elif self.target_ranges and self.trusted_range == '':
             self.set_firewall.allow_network_transport(direction='outbound', protocol='tcp', networks=outbound)
             self.set_firewall.allow_network_transport(direction='outbound', protocol='udp', networks=outbound)
-        elif self.trusted_range != '' and self.target_ranges != '':
+        elif self.trusted_range and self.target_ranges == '':
             self.set_firewall.allow_network_transport(direction='inbound', trusted=True, protocol='udp', networks=self.trusted_range)
             self.set_firewall.allow_network_transport(direction='inbound', trusted=True, protocol='tcp', networks=self.trusted_range)
         else:
