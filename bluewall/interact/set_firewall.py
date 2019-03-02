@@ -261,8 +261,8 @@ class SetFirewall(BwCli):
                 for network in networks:
                     if len(ports) == 0:
                         rules = self.rule_builder('I', chain_options=direction_map[direction],
-                                                  append_rule='1 -d {net} -p {protocol} -j {policy}'.format(
-                                                      protocol=protocol, net=network, policy=policy))
+                                                  append_rule='1 -{path} {net} -p {protocol} -j {policy}'.format(
+                                                      path=path, protocol=protocol, net=network, policy=policy))
                         self.command_list.extend(rules)
                         if self.verbose > 0:
                             print("{gp} Limiting {direction} {protocol} connections to {net}.".format(
@@ -270,8 +270,8 @@ class SetFirewall(BwCli):
                                 direction=bcolors.BOLD + direction + bcolors.ENDC, net=network))
                     else:
                         rules = self.rule_builder('I', chain_options=direction_map[direction],
-                                                  append_rule='1 -d {net} -p {protocol} -m multiport --dports {ports} -j {policy}'.format(
-                                                      ports=ports, policy=policy, protocol=protocol, net=network))
+                                                  append_rule='1 -{path} {net} -p {protocol} -m multiport --dports {ports} -j {policy}'.format(
+                                                      path=path, ports=ports, policy=policy, protocol=protocol, net=network))
                         self.command_list.extend(rules)
                         if self.verbose > 0:
                             if policy == 'DROP':
