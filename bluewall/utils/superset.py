@@ -37,8 +37,7 @@ class AOR(object):
         configs['trusted_host'] = []
         configs['target_range'] = []
         configs['target_host'] = []
-        configs['nostrike_range'] = []
-        configs['nostrike_host'] = []
+        configs['nostrike'] = []
 
         for line in rawconfigs:
             try:

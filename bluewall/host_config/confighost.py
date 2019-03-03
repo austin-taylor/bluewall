@@ -45,7 +45,6 @@ class ConfigHost(object):
         self.set_firewall.command_list.extend(rules)
         return
 
-
     def set_nostrike(self):
         if self.nostrike:
             rules = []
@@ -78,7 +77,6 @@ class ConfigHost(object):
             self.set_firewall.allow_network_transport(direction='inbound', trusted=True, protocol='tcp', networks=self.trusted_range)
         else:
             print("[{warn}INFO{end}] No target or trusted ranges detected in configuration".format(warn=bcolors.WARNING, endc=bcolors.ENDC))
-
 
     def redhat_setup(self, execute=False):
         print("[{info}PROCESSING RULES{ENDC}]\n".format(info=bcolors.OKBLUE, ENDC=bcolors.ENDC))
@@ -133,8 +131,7 @@ class ConfigHost(object):
         self.win_config.append('netsh advfirewall firewall add rule name=targets dir=out remoteip=' +
                                target_entries + ' action=allow')
         if self.nostrike:
-            nostrike_entries = '"' + ','.join(
-                self.configs.configs['nostrike_range'] + self.configs.configs['nostrike']) + '"'
+            nostrike_entries = '"' + ','.join(self.configs.configs['nostrike']) + '"'
             self.win_config.append('netsh advfirewall firewall add rule name=blacklist-in dir=in remoteip=' +
                                    nostrike_entries + ' action=block')
             self.win_config.append('netsh advfirewall firewall add rule name=blacklist-out dir=out remoteip=' +
