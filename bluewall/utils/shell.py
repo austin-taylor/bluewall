@@ -52,9 +52,10 @@ class Interact(object):
             #('iface', 'RedHat ethernet interface', 1, 1, [validator.eth_iface_check]),
             ('rh_host', 'RedHat hostname', 1, 1, [validator.hostname_check]),
             ('rh_ipaddr', 'RedHat IP Address', 1, 1, [validator.ip_validator]),
+            ('dns', 'DNS (optional)', 0, 1, [validator.ip_validator]),
             ('netmask', 'Network Mask', 1, 1, [validator.ip_validator]),
             ('gateway_addr', 'Gateway Address', 1, 1, [validator.ip_validator]),
-            ('rh_mac', 'MAC Address (enter * for random)', 1, 1, [validator.mac_check])
+            ('rh_mac', 'MAC Address (optional, * for random)', 0, 1, [validator.mac_check])
         ]
 
         firewall_config_fields = [
