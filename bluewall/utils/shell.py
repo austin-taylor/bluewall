@@ -62,8 +62,7 @@ class Interact(object):
             ('target_host', 'Target host (enter blank when finished)', 0, 100, [validator.ip_validator]),
             ('trusted_range', 'Trusted range (enter blank when finished)', 0, 100, [validator.network_validator]),
             ('trusted_host', 'Trusted host (enter blank when finished)', 0, 100, [validator.ip_validator]),
-            ('nostrike_range', 'No-strike range (enter blank when finished)', 0, 100, [validator.network_validator]),
-            ('nostrike_host', 'No-strike host (enter blank when finished)', 0, 100, [validator.ip_validator])
+            ('nostrike', 'No-strike range (enter blank when finished)', 0, 100, [validator.network_validator])
         ]
 
         if DEBUG:
