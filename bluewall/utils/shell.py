@@ -59,10 +59,8 @@ class Interact(object):
         ]
 
         firewall_config_fields = [
-            ('target_range', 'Target range (enter blank when finished)', 0, 100, [validator.network_validator]),
-            ('target_host', 'Target host (enter blank when finished)', 0, 100, [validator.ip_validator]),
-            ('trusted_range', 'Trusted range (enter blank when finished)', 0, 100, [validator.network_validator]),
-            ('trusted_host', 'Trusted host (enter blank when finished)', 0, 100, [validator.ip_validator]),
+            ('target_range', 'Target range (/32 for single host, enter when finished)', 0, 100, [validator.network_validator]),
+            ('trusted_range', 'Trusted range (/32 for single host, enter when finished)', 0, 100, [validator.network_validator]),
             ('nostrike', 'No-strike host (enter blank when finished)', 0, 100, [validator.ip_validator])
         ]
 
