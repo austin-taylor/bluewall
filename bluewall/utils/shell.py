@@ -54,14 +54,13 @@ class Interact(object):
             ('rh_ipaddr', 'RedHat IP Address', 1, 1, [validator.ip_validator]),
             ('netmask', 'Network Mask', 1, 1, [validator.ip_validator]),
             ('gateway_addr', 'Gateway Address', 1, 1, [validator.ip_validator]),
-            ('rh_mac', 'MAC Address (enter * for random)', 1, 1, [validator.mac_check])
+            ('dns', 'DNS Address (optional)', 0, 1, [validator.ip_validator]),
+            ('rh_mac', 'MAC Address (optional, enter * for random)', 0, 1, [validator.mac_check])
         ]
 
         firewall_config_fields = [
-            ('target_range', 'Target range (enter blank when finished)', 0, 100, [validator.network_validator]),
-            ('target_host', 'Target host (enter blank when finished)', 0, 100, [validator.ip_validator]),
-            ('trusted_range', 'Trusted range (enter blank when finished)', 0, 100, [validator.network_validator]),
-            ('trusted_host', 'Trusted host (enter blank when finished)', 0, 100, [validator.ip_validator]),
+            ('target_range', 'Target range (/32 for single host, enter blank when finished)', 0, 100, [validator.network_validator]),
+            ('trusted_range', 'Trusted range (/32 for single host, enter blank when finished)', 0, 100, [validator.network_validator]),
             ('nostrike', 'No-strike range (enter blank when finished)', 0, 100, [validator.network_validator])
         ]
 
