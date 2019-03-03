@@ -6,7 +6,7 @@ setup(
     platforms=["any"],
     long_description='Firewall configuration generator and implementor for Cyber Network Defenders. ',
     packages=find_packages(),
-    scripts=['bin/bw','bin/bs'],
+    scripts=['bin/bluewall, bin/bs'],
     author="Austin Taylor, Nicholas Lupien",
     author_email="git@austin-taylor.io, nick.lupien@infiniteloops.net"
 
