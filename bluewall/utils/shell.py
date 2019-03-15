@@ -110,9 +110,9 @@ class Interact(object):
 
         whip.set_title("Bluewall: " + config_filename)
         if whip.confirm("Would you like to execute Bluewall with this config now?", default='no'):
-            self.run_command('bw -c ' + config_filename, VERBOSE=2)
+            self.run_command('bluewall -c ' + config_filename, VERBOSE=2)
 
-        # escape all other bw function for this instance
+        # escape all other bluewall function for this instance
         exit()
 
 
