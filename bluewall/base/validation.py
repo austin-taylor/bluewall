@@ -20,7 +20,7 @@ class Validation(object):
                                'win_host': 'hostname',
                                'gateway_addr': 'ip',
                                'target_range': 'subnet',
-                               'nostrike': 'ip',
+                               'nostrike': 'subnet',
                                'trusted_range': 'subnet',
                                'trusted_host': 'subnet'}
         else:
