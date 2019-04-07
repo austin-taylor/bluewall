@@ -49,19 +49,19 @@ sudo bw -h (for help)
 
 ```bash
 # Setup Initial Environment using Configuration
-sudo bw -c config/hostconfig.ini
+sudo bluewall -c config/hostconfig.ini
 
 # Export optional windows configuration
-sudo bw -c config/hostconfig.ini -w autoconfig.ps1
+sudo bluewall -c config/hostconfig.ini -w autoconfig.ps1
 
 # Add additional inbound host or ranges
-sudo bw -ih 192.168.0.3,192.168.1.0/24
+sudo bluewall -ih 192.168.0.3,192.168.1.0/24
 
 # Exclude host to communicate with
-sudo bw -eh 192.168.1.1
+sudo bluewall -eh 192.168.1.1
 
 # Super easy wizard mode
-sudo bw --wizard
+sudo bluewall --wizard
 ```
 
 ### Help
@@ -165,7 +165,7 @@ trusted_host=42.42.42.42
 
 ### Output
 ```bash
-[ataylor@localhost bluewall]$ sudo bw -c configs/exampleconfig.ini 
+[ataylor@localhost bluewall]$ sudo bluewall -c configs/exampleconfig.ini 
 [OK] 192.168.1.101 is a valid setting for dns
 [OK] 192.168.1.1 is a valid setting for gateway_addr
 [OK] 24 is a valid setting for cidr_prefix
