@@ -40,7 +40,7 @@ class BwCli(object):
         self.parser.add_argument("-i", "--allow_outbound_icmp", action="store_true", help="Don't restrict ICMP types")
         self.parser.add_argument("-d", "--disallow_dhcp", action="store_true", help="Disallow DHCP")
         self.parser.add_argument("-w", "--windows_config",
-                                 help="Generate Windows Configuration. Usage: bw -w config.ps1")
+                                 help="Generate Windows Configuration. Usage: bluewall -w config.ps1")
         self.parser.add_argument("-ot", "--tcp_ports_out", help="Comma separated list of allowed TCP ports outbound")
         self.parser.add_argument("-ou", "--udp_ports_out", help="Comma separated list of allowed UDP ports outbound")
         self.parser.add_argument("-it", "--tcp_ports_in", help="Comma separated list of allowed TCP ports inbound")
