@@ -33,7 +33,7 @@ class Interact(object):
         if debug:
             print 'UID: ' + str(os.getuid())
         if os.getuid() != 0:
-            print("[-] Program MUST be run as sudo or root!\nUsage: sudo bw <options>")
+            print("[-] Program MUST be run as sudo or root!\nUsage: sudo bluewall <options>")
             exit()
         return
 
