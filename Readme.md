@@ -25,7 +25,7 @@ Features
 
 
 #### Commandline
-    *  bw -c config/example.ini
+    *  bluewall -c config/example.ini
     ** See example configuration
 
 #### Utils
@@ -42,7 +42,7 @@ Features
 ```bash
 # BUILT FOR PYTHON 2.x
 sudo python setup.py install
-sudo bw -h (for help)
+sudo bluewall -h (for help)
 ```
 
 ## Getting Started
@@ -66,7 +66,7 @@ sudo bluewall --wizard
 
 ### Help
 ```
-usage: bw [-h] [-V] [-v] [-r] [-p] [-i] [-d] [-w WINDOWS_CONFIG]
+usage: bluewall [-h] [-V] [-v] [-r] [-p] [-i] [-d] [-w WINDOWS_CONFIG]
           [-ot TCP_PORTS_OUT] [-ou UDP_PORTS_OUT] [-it TCP_PORTS_IN]
           [-iu UDP_PORTS_IN] [-oh OUTBOUND_HOSTS] [-ih INBOUND_HOSTS]
           [-eh EXCLUDE_HOSTS] [-l] [-s] [-q] [-D] [-A] [-F] [-S] [-c CONFIG]
@@ -100,7 +100,7 @@ optional arguments:
                         Don't restrict ICMP types
   -d, --disallow_dhcp   Disallow DHCP
   -w WINDOWS_CONFIG, --windows_config WINDOWS_CONFIG
-                        Generate Windows Configuration. Usage: bw -w
+                        Generate Windows Configuration. Usage: bluewall -w
                         config.ps1
   -ot TCP_PORTS_OUT, --tcp_ports_out TCP_PORTS_OUT
                         Comma separated list of allowed TCP ports outbound
